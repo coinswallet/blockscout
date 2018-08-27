@@ -10,9 +10,16 @@
         <ul class="nav nav-tabs card-header-tabs d-none d-md-inline-flex">
           <li class="nav-item">
             <%= link(
+                  gettext("Tokens"),
+                  class: "nav-link",
+                  to: address_token_path(@conn, :index, @conn.assigns.locale, @address.hash)
+                ) %>
+          </li>
+          <li class="nav-item">
+            <%= link(
                   gettext("Transactions"),
                   class: "nav-link",
-                  to: address_transaction_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"])
+                  to: address_transaction_path(@conn, :index, @conn.assigns.locale, @address.hash)
                 ) %>
           </li>
           <li class="nav-item">
@@ -20,13 +27,13 @@
                   gettext("Internal Transactions"),
                   class: "nav-link active",
                   "data-test": "internal_transactions_tab_link",
-                  to: address_internal_transaction_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"])
+                  to: address_internal_transaction_path(@conn, :index, @conn.assigns.locale, @address.hash)
                 ) %>
           </li>
           <%= if contract?(@address) do %>
             <li class="nav-item">
               <%= link(
-                  to: address_contract_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"]),
+                  to: address_contract_path(@conn, :index, @conn.assigns.locale, @address.hash),
                   class: "nav-link") do %>
                 <%= gettext("Code") %>
 
@@ -40,7 +47,7 @@
             <li class="nav-item">
               <%= link(
                   gettext("Read Contract"),
-                  to: address_read_contract_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"]),
+                  to: address_read_contract_path(@conn, :index, @conn.assigns.locale, @address.hash),
                   class: "nav-link")%>
             </li>
           <% end %>
@@ -52,19 +59,24 @@
             <a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Internal Transactions</a>
             <div class="dropdown-menu">
               <%= link(
+                    gettext("Tokens"),
+                    class: "dropdown-item",
+                    to: address_token_path(@conn, :index, @conn.assigns.locale, @address.hash)
+                  ) %>
+              <%= link(
                     gettext("Transactions"),
                     class: "dropdown-item",
-                    to: address_transaction_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"])
+                    to: address_transaction_path(@conn, :index, @conn.assigns.locale, @address.hash)
                   ) %>
               <%= link(
                     gettext("Internal Transactions"),
                     class: "dropdown-item",
                     "data-test": "internal_transactions_tab_link",
-                    to: address_internal_transaction_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"])
+                    to: address_internal_transaction_path(@conn, :index, @conn.assigns.locale, @address.hash)
                   ) %>
               <%= if contract?(@address) do %>
                 <%= link(
-                    to: address_contract_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"]),
+                    to: address_contract_path(@conn, :index, @conn.assigns.locale, @address.hash),
                     class: "dropdown-item") do %>
                   <%= gettext("Code") %>
 
@@ -86,7 +98,7 @@
           <div class="dropdown-menu dropdown-menu-right filter" aria-labelledby="dropdownMenu2">
             <%= link(
               gettext("All"),
-              to: address_internal_transaction_path(@conn, :index, @conn.assigns.locale, @conn.params["address_id"]),
+              to: address_internal_transaction_path(@conn, :index, @conn.assigns.locale, @address.hash),
               class: "address__link address__link--active dropdown-item",
               "data-test": "filter_option"
             ) %>
@@ -96,7 +108,7 @@
                 @conn,
                 :index,
                 @conn.assigns.locale,
-                @conn.params["address_id"],
+                @address.hash,
                 filter: "to"
               ),
               class: "address__link address__link--active dropdown-item",
@@ -108,7 +120,7 @@
                 @conn,
                 :index,
                 @conn.assigns.locale,
-                @conn.params["address_id"],
+                @address.hash,
                 filter: "from"
               ),
               class: "address__link address__link--active dropdown-item",

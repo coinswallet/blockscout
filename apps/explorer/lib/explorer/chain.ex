@@ -1647,9 +1647,9 @@ defmodule Explorer.Chain do
   end
 
   @spec fetch_tokens_from_address_hash(Hash.Address.t()) :: []
-  def fetch_tokens_from_address_hash(address_hash) do
+  def fetch_tokens_from_address_hash(address_hash, paging_options \\ []) do
     address_hash
-    |> Token.with_transfers_by_address()
+    |> Token.with_transfers_by_address(paging_options)
     |> Repo.all()
   end
 
