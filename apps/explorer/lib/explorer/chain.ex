@@ -1692,4 +1692,11 @@ defmodule Explorer.Chain do
     |> TokenBalance.last_token_balances()
     |> Repo.all()
   end
+
+  @spec count_token_transfers_from_address_hash(Hash.Address.t(), Hash.Address.t()) :: []
+  def count_token_transfers_from_address_hash(token_hash, address_hash) do
+    token_hash
+    |> Token.interactions_with_address(address_hash)
+    |> Repo.aggregate(:count, :name)
+  end
 end
